@@ -35,32 +35,24 @@ Albany, GA  90.1  108.7 74.8  82.0  96.6  89.8  96.8
 Albany, NY  108.1 105.0 112.6 101.0 102.8 111.7 108.6
 ```
 
-Census API (http://www.census.gov/developers/)
+USA Today Census API (http://developer.usatoday.com/)
 
 ```
-{
-  "get": [
-    "P0010001",
-    "P0030001"],
-  "fips": [
-    {
-      "name": "state",
-      "exampleValue": "06",
-      "geoLevelId": "040"
-    },
-    {
-      "name": "county",
-      "exampleValue": "001",
-      "geoLevelId": "050",
-      "in": [
-        {
-          "name": "state",
-          "example-value": "06",
-          "isOptionalWithWCFor": "true"
-        }
-      ]
-    },
-    {
-      "name": "county subdivision",
-      "exampleValue": "86690",
+  {"request":{
+    "keyname":"StatePostal",
+    "keypat":"NC",
+    "sumlevid":"4,6",
+    "year":"2010"},
+  "response":[
+
+    {"Placename":"Aberdeen","PlacenameFull":"Aberdeen town, N.C.","FIPS":"3700160",
+    "GNIS":"","StateAP":"N.C.","StatePostal":"NC", "PctChange":"0.867647", "Pop":"6350",
+    "PctHisp":"0.05086600","PctNonHisp":"0.94913400","PctWhite":"0.67889800",
+    "PctNonHispWhite":"0.64818900","PctBlack":"0.24661400","PctAmInd":"0.01291300",
+    "PctAsian":"0.01779500","PctNatHawOth":"0.00000000","PctTwoOrMore":"0.02881900",
+    "PctOther":"0.01496100","USATDiversityIndex":"0.51377900","PopSqMi":"746.20000000",
+    "LandSqMi":"8.50000000","WaterSqMi":"0.10000000","TotSqMi":"8.60000000",
+    "Lat":"35.1341739000","Long":"-79.4310439000","HousingUnits":"3081",
+    "PctVacant":"0.08081800"}
+
 ```
