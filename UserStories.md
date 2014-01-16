@@ -1,6 +1,6 @@
 # User Stories:
 
-## 1. Generating possible locations:
+## 1. Generating Possible Locations:
 
 ###  Feature:
   * As a person interested in moving to a new location
@@ -18,7 +18,7 @@
 
 
 
-## 2. Choosing places that interest you to add notes to.:
+## 2. Managing your Chosen Places:
 
 ###  Feature:
   * As a user with recommendations, I want to be able to choose from my recommendations and add my own details to the chosen places.
