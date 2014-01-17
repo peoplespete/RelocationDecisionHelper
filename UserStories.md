@@ -28,10 +28,10 @@
 ###  Usage:
   ```
   * ./matches  "Shows a list of all chosen places"
-  * ./matches/add/:id  "Adds a recommendation to a list of chosen places"
-  * ./matches/:id  "Shows details of a particular place"
-  * ./matches/:id/edit  "Allows you to add or change information about a particular place"
-  * ./matches/:id/delete  "Allows you remove a particular place that no longer interests you"
+  * ./matches add :id  "Adds a recommendation to a list of chosen places"
+  * ./matches :id  "Shows details of a particular place"
+  * ./matches :id edit  "Allows you to add or change information about a particular place"
+  * ./matches :id delete  "Allows you remove a particular place that no longer interests you"
   ```
 
 ###  Acceptance Criteria:
