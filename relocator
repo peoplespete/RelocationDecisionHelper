@@ -3,27 +3,38 @@
 require 'highline/import'
 require_relative 'lib/environment'
 
-pup = ""
-choose do |menu|
-  menu.prompt = "Please choose your favorite programming language?  "
+environment = ARGV[0]
+# puts environment
+Environment.environment = environment || "production"
 
-  menu.choice(:ruby) { say("This should be <%= color('bold', BOLD) %>!")}
-  menu.choices(:python, :perl) do |chosen|
-    say("Yo you picked #{chosen}")
-    pup = chosen
+location_options = {}
+choose do |menu|
+  menu.prompt = "What would you like to do?"
+  menu.choice(:Add) do |chosen|
+    Location.add
+  end
+  menu.choice(:Delete) do |chosen|
+    puts "woah man chill out"
   end
 end
-pete = ask("Company?  ") { |q| q.default = "none" }
-
-puts pete
 
 
 
-# database = Environment.database_connection(options[:environment])
-#     # This is ripe for a SQL injection attack:
-#     statement = "insert into purchases(name, calories, price) values('#{options[:name]}', #{options[:calories]}, #{options[:price]})"
-#     database.execute(statement)
-#     puts "A purchase named #{options[:name]}, with #{options[:calories]} calories and $#{options[:price]} cost was created."
+
+
+# pup = ""
+# choose do |menu|
+#   menu.prompt = "Please choose your favorite programming language?  "
+
+#   menu.choice(:ruby) { say("This should be <%= color('bold', BOLD) %>!")}
+#   menu.choices(:python, :perl) do |chosen|
+#     say("Yo you picked #{chosen}")
+#     pup = chosen
+#   end
+# end
+# pete = ask("Company?  ") { |q| q.default = "none" }
+
+# puts pete
 
 
 
