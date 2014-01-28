@@ -6,14 +6,19 @@ class TestEnteringLocations < LocationTest
 # to run a single line test
 #$ ruby test/test_entering_purchases --name test_valid_purchase_gets_saved
 
+  @@sample_inputs = ['1','Wilmington','DE']
+
   def test_asks_for_name_of_city
-    inputs = ['1','Wilmington']
-    actual = pipe_it inputs
+    actual = pipe_it @@sample_inputs
     expected = "What is the name of the city or town you wish to add?"
     assert_includes_in_order actual, expected
   end
 
-
+  def test_asks_for_state_of_city
+    actual = pipe_it @@sample_inputs
+    expected = "What state is Wilmington in?"
+    assert_includes_in_order actual, expected
+  end
 
   # def test_valid_purchase_gets_saved
   #   skip

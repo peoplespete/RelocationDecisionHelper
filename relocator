@@ -7,7 +7,6 @@ environment = ARGV[0]
 # puts environment
 Environment.environment = environment || "production"
 
-location_options = {}
 choose do |menu|
   menu.prompt = "What would you like to do?"
   menu.choice(:Add) do |chosen|
