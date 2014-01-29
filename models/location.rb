@@ -35,6 +35,23 @@ class Location
    database.execute("insert into locations(city, state_code, climate) values('#{@name}', '#{@state_code}', '#{@climate}')")
   end
 
-
+  def self.read
+   database = Environment.database_connection
+   results = database.execute("select * from locations order by id asc")
+   database.results_as_hash = true
+   puts results.inspect
+    # results = database.execute("select purchases.* from purchases where name LIKE '%#{search_term}%' order by name ASC")
+    # results.map do |row_hash|
+    #   purchase = Purchase.new(
+    #               name: row_hash["name"],
+    #               price: row_hash["price"],
+    #               calories: row_hash["calories"])
+    #   # Ideally: purchase.category = Category.find(row_hash["category_id"])
+    #   # Not Ideally :(
+    #   category = Category.all.find{|category| category.id == row_hash["category_id"]}
+    #   purchase.category = category
+    #   purchase.send("id=", row_hash["id"])
+    #   purchase
+  end
 
 end

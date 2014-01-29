@@ -6,13 +6,25 @@ class LocationTest < MiniTest::Unit::TestCase
     Environment.environment = "test"
   end
 
+  def teardown
+    database.execute("delete from locations")
+  end
+
   def database
     Environment.database_connection
   end
 
-  def teardown
-    database.execute("delete from locations")
-
+  def pipe_it(args)
+    shell_output = ""
+    IO.popen('./relocator test', 'r+') do |pipe|
+      args.each do |arg|
+        pipe.puts arg
+      end
+      # pipe.puts
+      pipe.close_write
+      shell_output = pipe.read
+    end
+    shell_output
   end
 
   def assert_command_output expected, command
@@ -51,18 +63,6 @@ class LocationTest < MiniTest::Unit::TestCase
     assert_match /#{regexp_string}/, input.delete("\n"), "Expected /#{regexp_string}/ to match:\n" + input
   end
 
-  def pipe_it(args)
-    shell_output = ""
-    IO.popen('./relocator test', 'r+') do |pipe|
-      args.each do |arg|
-        pipe.puts arg
-      end
-      # pipe.puts
-      pipe.close_write
-      shell_output = pipe.read
-    end
-    shell_output
-  end
 
 end
 

@@ -12,8 +12,14 @@ choose do |menu|
   menu.choice(:Add) do |chosen|
     Location.add
   end
-  menu.choice(:Delete) do |chosen|
-    puts "woah man chill out"
+  menu.choice(:See) do |chosen|
+    Location.read
+  end
+  menu.choice(:Edit) do |chosen|
+    puts "you want to edit"
+  end
+  menu.choice(:Remove) do |chosen|
+    puts "you want to delete"
   end
 end
 
