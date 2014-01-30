@@ -13,7 +13,7 @@ choose do |menu|
     Location.add
   end
   menu.choice("View") do |chosen|
-    search_city = Location.fetch_query
+    search_city = Location.fetch_query('view')
     Location.find(search_city).each do |record|
       print record
       puts ""
@@ -21,10 +21,13 @@ choose do |menu|
     puts ""
   end
   menu.choice("Edit") do |chosen|
-    puts "you want to edit"
+    old_update_city = Location.fetch_query('update')
+    new_update_city = Location.fetch_replacement(old_update_city)
+    puts new_update_city
+    Location.update(old_update_city, new_update_city)
   end
   menu.choice("Remove") do |chosen|
-    delete_city = Location.fetch_query(true)
+    delete_city = Location.fetch_query('remove')
     Location.remove(delete_city)
   end
 end

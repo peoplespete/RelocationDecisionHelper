@@ -5,7 +5,6 @@ class TestDeletingLocations < LocationTest
 
   @@sample_inputs_write_ = ['1','Wilmington','DE','2']
   @@sample_inputs_write_2 = ['1','Easton','pa','1']
-  @@sample_inputs_read_ = ['2','2']
 
 # to run a single line test
 #$ ruby test/test_entering_purchases --name test_valid_purchase_gets_saved
@@ -25,10 +24,7 @@ class TestDeletingLocations < LocationTest
     database.results_as_hash = false
     Location.remove(['Easton', 'PA'])
     result = database.execute("select * from locations")
-    result = result.map do |entry|
-      entry.shift
-      return entry
-    end
+    result = clean_db_output(result)
     assert_equal result, ['Wilmington', 'DE', 'Temperate']
   end
 

@@ -27,6 +27,15 @@ class LocationTest < MiniTest::Unit::TestCase
     shell_output
   end
 
+  def clean_db_output(arg)
+    arg.map do |entry|
+      entry.drop(1).map do |mini_entry|
+        mini_entry[1] if mini_entry[0].class == String
+      end
+    end.flatten!.compact!
+
+  end
+
   def assert_command_output expected, command
     actual = `#{command} --environment test`.strip
     assert_equal expected, actual

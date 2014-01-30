@@ -48,21 +48,22 @@ class Location
     results
   end
 
-  def self.fetch_query(isDelete = false)
+  def self.fetch_query(action = nil)
     database = Environment.database_connection
-    results = database.execute("select city, state_code from locations order by id asc")
+    results = database.execute("select city, state_code, climate from locations order by id asc")
     choose do |menu|
-      action = isDelete ? "delete" : "view"
       menu.prompt = "What city would you like to #{action}?"
       results.each do |city_state|
         menu.choice("#{city_state[0]}, #{city_state[1]}") do |chosen|
           city_state
         end
       end
-      all = isDelete ? "REMOVE ALL" : "SHOW ALL"
-      menu.choice(all) do |chosen|
+      unless action == 'update'
+        all = (action << ' all').upcase
+        menu.choice(all) do |chosen|
           nil
         end
+      end
     end
   end
 
@@ -76,5 +77,17 @@ class Location
     # database.execute("delete from locations")
   end
 
+  def self.update(old_data, new_data)
+    database = Environment.database_connection
+    item_to_update = find([old_data[0],old_data[1]]).flatten
+    database.execute("update locations set city = '#{new_data[0].capitalize}', state_code = '#{new_data[1].upcase}', climate = '#{new_data[2].capitalize}' where id = '#{item_to_update[0]}'")
+  end
+
+  def self.fetch_replacement(old_data)
+    # use map
+    old_data.map do |old|
+      ask("The entry is currently: #{old}.  Type a new value or press ENTER to leave unchanged.") { |q| q.default = old }
+    end
+  end
 
 end
