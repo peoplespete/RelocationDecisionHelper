@@ -9,19 +9,21 @@ Environment.environment = environment || "production"
 
 choose do |menu|
   menu.prompt = "What would you like to do?"
-  menu.choice(:Add) do |chosen|
+  menu.choice("Add") do |chosen|
     Location.add
   end
-  menu.choice(:See) do |chosen|
+  menu.choice("View") do |chosen|
     search_city = Location.fetch_query
-    puts search_city.inspect
-    print Location.find(search_city)
+    Location.find(search_city).each do |record|
+      print record
+      puts ""
+    end
     puts ""
   end
-  menu.choice(:Edit) do |chosen|
+  menu.choice("Edit") do |chosen|
     puts "you want to edit"
   end
-  menu.choice(:Remove) do |chosen|
+  menu.choice("Remove") do |chosen|
     puts "you want to delete"
   end
 end
