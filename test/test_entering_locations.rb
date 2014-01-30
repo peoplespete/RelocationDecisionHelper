@@ -38,6 +38,18 @@ class TestEnteringLocations < LocationTest
     assert_equal 1, result[0][0]
   end
 
+  def test_stopusingsymbolswithhighlinesopeoplecantypewordintoo
+    skip
+  end
+
+
+  def test_that_you_cannot_enter_a_city_state_pair_that_already_exist
+    #it should pump you into the edit of the existing entry
+    skip
+
+  end
+
+
 end
 
 

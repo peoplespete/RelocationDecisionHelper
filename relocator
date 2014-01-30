@@ -13,7 +13,10 @@ choose do |menu|
     Location.add
   end
   menu.choice(:See) do |chosen|
-    Location.read
+    search_city = Location.fetch_query
+    puts search_city.inspect
+    print Location.find(search_city)
+    puts ""
   end
   menu.choice(:Edit) do |chosen|
     puts "you want to edit"
