@@ -48,21 +48,33 @@ class Location
     results
   end
 
-  def self.fetch_query
+  def self.fetch_query(isDelete = false)
     database = Environment.database_connection
     results = database.execute("select city, state_code from locations order by id asc")
     choose do |menu|
-      menu.prompt = "What city would you like to see?"
+      action = isDelete ? "delete" : "view"
+      menu.prompt = "What city would you like to #{action}?"
       results.each do |city_state|
         menu.choice("#{city_state[0]}, #{city_state[1]}") do |chosen|
           city_state
         end
       end
-      menu.choice("SHOW ALL") do |chosen|
+      all = isDelete ? "REMOVE ALL" : "SHOW ALL"
+      menu.choice(all) do |chosen|
           nil
         end
     end
-
   end
+
+  def self.remove(delete_city)
+    database = Environment.database_connection
+    cities_or_city = find(delete_city)
+    # print cities_or_city.inspect
+    cities_or_city.each do |entry|
+      database.execute("delete from locations where id = '#{entry[0]}'")
+    end
+    # database.execute("delete from locations")
+  end
+
 
 end

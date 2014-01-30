@@ -24,7 +24,8 @@ choose do |menu|
     puts "you want to edit"
   end
   menu.choice("Remove") do |chosen|
-    puts "you want to delete"
+    delete_city = Location.fetch_query(true)
+    Location.remove(delete_city)
   end
 end
 

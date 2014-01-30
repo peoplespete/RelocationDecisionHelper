@@ -41,10 +41,8 @@ class TestReadingLocations < LocationTest
     actual1 = pipe_it @@sample_inputs_write_
     actual2 = pipe_it @@sample_inputs_write_2
     actual = pipe_it @@sample_inputs_read_
-    expected = "What city would you like to see?"
+    expected = "What city would you like to view?"
     assert_includes_in_order actual, expected
-
-
   end
 
 

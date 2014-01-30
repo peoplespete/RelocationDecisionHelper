@@ -3,15 +3,43 @@ require_relative 'helper'
 
 class TestDeletingLocations < LocationTest
 
+  @@sample_inputs_write_ = ['1','Wilmington','DE','2']
+  @@sample_inputs_write_2 = ['1','Easton','pa','1']
+  @@sample_inputs_read_ = ['2','2']
+
 # to run a single line test
 #$ ruby test/test_entering_purchases --name test_valid_purchase_gets_saved
-  # def test_removing_all_locations
+
+  def test_removing_all_locations
+    actual1 = pipe_it @@sample_inputs_write_
+    actual2 = pipe_it @@sample_inputs_write_2
+    database.results_as_hash = false
+    Location.remove(nil)
+    result = database.execute("select count(id) from locations")
+    assert_equal 0, result[0][0]
+  end
+
+  def test_removing_chosen_location
+    actual1 = pipe_it @@sample_inputs_write_
+    actual2 = pipe_it @@sample_inputs_write_2
+    database.results_as_hash = false
+    Location.remove(['Easton', 'PA'])
+    result = database.execute("select * from locations")
+    result = result.map do |entry|
+      entry.shift
+      return entry
+    end
+    assert_equal result, ['Wilmington', 'DE', 'Temperate']
+  end
 
 
-  #   assert false
-  # end
 
 
+  def test_integration_test_delete
+    skip
+
+
+  end
 
 end
 
