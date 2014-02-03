@@ -5,6 +5,8 @@ class TestDeletingLocations < LocationTest
 
   @@sample_inputs_write_ = ['1','Wilmington','DE','2','5']
   @@sample_inputs_write_2 = ['1','Easton','pa','1','5']
+  @@sample_inputs_delete = ['4','1','5']
+  @@sample_inputs_delete_2 = ['4','3','5']
 
 # to run a single line test
 #$ ruby test/test_entering_purchases --name test_valid_purchase_gets_saved
@@ -28,14 +30,23 @@ class TestDeletingLocations < LocationTest
     assert_equal result, ['Wilmington', 'DE', 'Temperate']
   end
 
-
-
-
-  def test_integration_test_delete
-    skip
-
-
+  def test_removing_displays_message_confirming_removal
+    pipe_it @@sample_inputs_write_
+    pipe_it @@sample_inputs_write_2
+    database.results_as_hash = false
+    result = pipe_it @@sample_inputs_delete
+    assert_includes_in_order result, 'Location Removed'
   end
+
+  def test_removing_displays_message_confirming_removal_of_all
+    pipe_it @@sample_inputs_write_
+    pipe_it @@sample_inputs_write_2
+    database.results_as_hash = false
+    result = pipe_it @@sample_inputs_delete_2
+    assert_includes_in_order result, 'Locations Removed'
+  end
+
+
 
 end
 

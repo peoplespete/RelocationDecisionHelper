@@ -25,9 +25,13 @@ class Location
         location_options[:climate] = 'Warm'
       end
     end
-    location = Location.new(location_options)
-    location.save
-    puts "Location added"
+    if find([location_options[:name].capitalize, location_options[:state_code].upcase]) != []
+      puts "Sorry, that location already exists."
+    else
+      location = Location.new(location_options)
+      location.save
+      puts "Location added"
+    end
   end
 
   def save
@@ -71,9 +75,12 @@ class Location
     database = Environment.database_connection
     cities_or_city = find(delete_city)
     # print cities_or_city.inspect
-    cities_or_city.each do |entry|
+    plural = ''
+    cities_or_city.each_with_index do |entry, i|
       database.execute("delete from locations where id = '#{entry[0]}'")
+      plural = 's' if i > 0
     end
+    puts "Location#{plural} Removed"
     # database.execute("delete from locations")
   end
 
@@ -81,6 +88,7 @@ class Location
     database = Environment.database_connection
     item_to_update = find([old_data[0],old_data[1]]).flatten
     database.execute("update locations set city = '#{new_data[0].capitalize}', state_code = '#{new_data[1].upcase}', climate = '#{new_data[2].capitalize}' where id = '#{item_to_update[0]}'")
+    puts 'Location Updated'
   end
 
   def self.fetch_replacement(old_data)

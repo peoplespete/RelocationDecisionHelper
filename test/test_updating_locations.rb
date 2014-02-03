@@ -26,7 +26,14 @@ class TestUpdatingLocations < LocationTest
     result = result.flatten.drop(1)
     # result = clean_db_output(result)
     assert_equal result, ['Easton','MA', 'Temperate']
+  end
 
+  def test_update_displays_message_confirming_update
+    pipe_it @@sample_inputs_write
+    database.results_as_hash = false
+    result = pipe_it @@sample_inputs_update
+    # result = clean_db_output(result)
+    assert_includes_in_order result, 'Location Updated'
   end
 
 end

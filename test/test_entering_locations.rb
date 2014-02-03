@@ -26,7 +26,7 @@ class TestEnteringLocations < LocationTest
     assert_includes_in_order actual, expected
   end
 
-  def test_valid_purchase_gets_saved
+  def test_valid_location_gets_saved
     actual = pipe_it @@sample_inputs
     database.results_as_hash = false
     results = database.execute("select * from locations")
@@ -38,9 +38,11 @@ class TestEnteringLocations < LocationTest
     assert_equal 1, result[0][0]
   end
 
-  def test_that_you_cannot_enter_a_city_state_pair_that_already_exist
+  def test_that_you_cannot_enter_a_city_state_pair_that_already_exists
     #it should pump you into the edit of the existing entry
-    skip
+    actual = pipe_it @@sample_inputs
+    result = pipe_it @@sample_inputs
+    assert_includes_in_order result, "Sorry, that location already exists."
 
   end
 
