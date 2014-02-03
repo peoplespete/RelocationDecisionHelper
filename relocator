@@ -1,17 +1,29 @@
 #!/usr/bin/env ruby
 
 require 'highline/import'
+require 'colorize'
 require_relative 'lib/environment'
+
+color_dark = :black
+color_light = :light_yellow
 
 environment = ARGV[0]
 # puts environment
 Environment.environment = environment || "production"
+
+
+
+# puts String.colors
+# String.colors - return array of all possible colors names
+# puts String.modes # - return array of all possible modes
+# String.color_matrix #- displays color matrix with color names
+puts String.color_matrix("FOO") #- display color matrix with "FOO" text
 puts "    ____       __                 __  _                ___              _      __              __
    / __ \\\___  / /___  _________ _/ /_(_)___  ____     /   |  __________(_)____/ /_____ _____  / /_
   / /_/ / _ \\/ / __ \\/ ___/ __ `/ __/ / __ \\/ __ \\   / /| | / ___/ ___/ / ___/ __/ __ `/ __ \\/ __/
  / _, _/  __/ / /_/ / /__/ /_/ / /_/ / /_/ / / / /  / ___ |(__  |__  ) (__  ) /_/ /_/ / / / / /_
 /_/ |_|\\___/_/\\____/\\___/\\__,_/\\__/_/\\____/_/ /_/  /_/  |_/____/____/_/____/\\__/\\__,_/_/ /_/\\__/
-                                                                                                  "
+                                                                                                  ".bold.colorize(:color => color_dark, :background => color_light)
 loop do
   puts "      _______________________________________________
      |                                               | |\\
@@ -23,33 +35,33 @@ loop do
        |_____________________________/<  _...==...____|    |   | ___ |
          \\\\ .-.  .-. //            \\|  \\//.-.  .-.\\\\ --------\"-\"/.-.\\_]
           `( o )( o )'              '    ( o )( o )`\"\"\"\"\"\"\"\"\"==`( o )
-            '-'  '-'                      '-'  '-'               '-'"
+            '-'  '-'                      '-'  '-'               '-'".bold.colorize(:color => color_light, :background => color_dark)
 
   choose do |menu|
-    menu.prompt = "What would you like to do?"
-    menu.choice("Add") do |chosen|
+    menu.prompt = "What would you like to do?".bold.colorize(:color => color_dark, :background => color_light)
+    menu.choice("Add".colorize(:color => color_light, :background => color_dark)) do |chosen|
       Location.add
     end
-    menu.choice("View") do |chosen|
+    menu.choice("View".colorize(:color => color_light, :background => color_dark)) do |chosen|
       search_city = Location.fetch_query('view')
       Location.find(search_city).each do |record|
-        print record
+        print record.to_s.colorize(:color => color_light, :background => color_dark)
         puts ""
       end
       puts ""
     end
-    menu.choice("Edit") do |chosen|
+    menu.choice("Edit".colorize(:color => color_light, :background => color_dark)) do |chosen|
       old_update_city = Location.fetch_query('update')
       new_update_city = Location.fetch_replacement(old_update_city)
-      puts "Old Location: #{old_update_city.inspect}"
-      puts "Updated Location: #{new_update_city.inspect}"
+      puts "Old Location: #{old_update_city.inspect}".colorize(:color => color_light, :background => color_dark)
+      puts "Updated Location: #{new_update_city.inspect}".colorize(:color => color_dark, :background => color_light)
       Location.update(old_update_city, new_update_city)
     end
-    menu.choice("Remove") do |chosen|
+    menu.choice("Remove".colorize(:color => color_light, :background => color_dark)) do |chosen|
       delete_city = Location.fetch_query('remove')
       Location.remove(delete_city)
     end
-    menu.choice("EXIT") do |chosen|
+    menu.choice("EXIT".colorize(:color => color_light, :background => color_dark)) do |chosen|
     puts "      _______________________________________________
      |    ______                ____                 |
      |   / ____/___  ____  ____/ / /_  __  _____     | |\\
@@ -61,7 +73,7 @@ loop do
        |_____________________________/<  _...==...____|    |   | ___ |
          \\\\ .-.  .-. //            \\|  \\//.-.  .-.\\\\ --------\"-\"/.-.\\_]
           `( o )( o )'              '    ( o )( o )`\"\"\"\"\"\"\"\"\"==`( o )
-            '-'  '-'                      '-'  '-'               '-'"
+            '-'  '-'                      '-'  '-'               '-'".bold.colorize(:color => color_dark, :background => color_light)
       exit
     end
   end
