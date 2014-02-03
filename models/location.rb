@@ -54,6 +54,7 @@ class Location
 
   def self.fetch_query(action = nil)
     database = Environment.database_connection
+    database.results_as_hash = false
     results = database.execute("select city, state_code, climate from locations order by id asc")
     choose do |menu|
       menu.prompt = "What city would you like to #{action}?"
@@ -93,6 +94,7 @@ class Location
 
   def self.fetch_replacement(old_data)
     # use map
+    puts old_data.inspect
     old_data.map do |old|
       ask("The entry is currently: #{old}.  Type a new value or press ENTER to leave unchanged.") { |q| q.default = old }
     end

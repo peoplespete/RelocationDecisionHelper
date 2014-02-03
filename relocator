@@ -13,118 +13,59 @@ puts "    ____       __                 __  _                ___              _ 
 /_/ |_|\\___/_/\\____/\\___/\\__,_/\\__/_/\\____/_/ /_/  /_/  |_/____/____/_/____/\\__/\\__,_/_/ /_/\\__/
                                                                                                   "
 loop do
+  puts "      _______________________________________________
+     |                                               | |\\
+     |    __  ___     _        __  ___               | ||
+     |   /  |/  /__ _(_)__    /  |/  /__ ___  __ __  |,\"\"---:___
+     |  / /|_/ / _ `/ / _ \\  / /|_/ / -_) _ \\/ // /  ||==  | .-.|
+     | /_/  /_/\\_,_/_/_//_/ /_/  /_/\\__/_//_/\\_,_/   ||==  | '-'-----.
+     |_______________________________________________||    |~  |   -(|
+       |_____________________________/<  _...==...____|    |   | ___ |
+         \\\\ .-.  .-. //            \\|  \\//.-.  .-.\\\\ --------\"-\"/.-.\\_]
+          `( o )( o )'              '    ( o )( o )`\"\"\"\"\"\"\"\"\"==`( o )
+            '-'  '-'                      '-'  '-'               '-'"
 
-
-
-
-
-
-
-
-puts "    _______________________________________________
-   |                                               | |\\
-   |    __  ___     _        __  ___               | ||
-   |   /  |/  /__ _(_)__    /  |/  /__ ___  __ __  |,\"\"---:___
-   |  / /|_/ / _ `/ / _ \\  / /|_/ / -_) _ \\/ // /  ||==  | .-.|
-   | /_/  /_/\\_,_/_/_//_/ /_/  /_/\\__/_//_/\\_,_/   ||==  | '-'-----.
-   |_______________________________________________||    |~  |   -(|
-     |_____________________________/<  _...==...____|    |   | ___ |
-       \\\\ .-.  .-. //            \\|  \\//.-.  .-.\\\\ --------\"-\"/.-.\\_]
-        `( o )( o )'              '    ( o )( o )`\"\"\"\"\"\"\"\"\"==`( o )
-          '-'  '-'                      '-'  '-'               '-'"
-
-choose do |menu|
-  menu.prompt = "What would you like to do?"
-  menu.choice("Add") do |chosen|
-    Location.add
-  end
-  menu.choice("View") do |chosen|
-    search_city = Location.fetch_query('view')
-    Location.find(search_city).each do |record|
-      print record
+  choose do |menu|
+    menu.prompt = "What would you like to do?"
+    menu.choice("Add") do |chosen|
+      Location.add
+    end
+    menu.choice("View") do |chosen|
+      search_city = Location.fetch_query('view')
+      Location.find(search_city).each do |record|
+        print record
+        puts ""
+      end
       puts ""
     end
-    puts ""
-  end
-  menu.choice("Edit") do |chosen|
-    old_update_city = Location.fetch_query('update')
-    new_update_city = Location.fetch_replacement(old_update_city)
-    puts new_update_city
-    Location.update(old_update_city, new_update_city)
-  end
-  menu.choice("Remove") do |chosen|
-    delete_city = Location.fetch_query('remove')
-    Location.remove(delete_city)
-  end
-  menu.choice("EXIT") do |chosen|
-    puts "   ______                ____
-  / ____/___  ____  ____/ / /_  __  _____
- / / __/ __ \\/ __ \\/ __  / __ \\/ / / / _ \\
-/ /_/ / /_/ / /_/ / /_/ / /_/ / /_/ /  __/
-\\____/\\____/\\____/\\__,_/_.___/\\__, /\\___/
-                             /____/       "
-    exit
-
+    menu.choice("Edit") do |chosen|
+      old_update_city = Location.fetch_query('update')
+      new_update_city = Location.fetch_replacement(old_update_city)
+      puts old_update_city.inspect
+      puts new_update_city.inspect
+      Location.update(old_update_city, new_update_city)
+    end
+    menu.choice("Remove") do |chosen|
+      delete_city = Location.fetch_query('remove')
+      Location.remove(delete_city)
+    end
+    menu.choice("EXIT") do |chosen|
+    puts "      _______________________________________________
+     |    ______                ____                 |
+     |   / ____/___  ____  ____/ / /_  __  _____     | |\\
+     |  / / __/ __ \\/ __ \\/ __  / __ \\/ / / / _ \\    | ||
+     | / /_/ / /_/ / /_/ / /_/ / /_/ / /_/ /  __/    |,\"\"---:___
+     | \\____/\\____/\\____/\\__,_/_.___/\\__, /\\___/     ||==  | .-.|
+     |                              /____/           ||==  | '-'-----.
+     |_______________________________________________||    |~  |   -(|
+       |_____________________________/<  _...==...____|    |   | ___ |
+         \\\\ .-.  .-. //            \\|  \\//.-.  .-.\\\\ --------\"-\"/.-.\\_]
+          `( o )( o )'              '    ( o )( o )`\"\"\"\"\"\"\"\"\"==`( o )
+            '-'  '-'                      '-'  '-'               '-'"
+      exit
+    end
   end
 end
-
-
-end
-
-
-
-
-# pup = ""
-# choose do |menu|
-#   menu.prompt = "Please choose your favorite programming language?  "
-
-#   menu.choice(:ruby) { say("This should be <%= color('bold', BOLD) %>!")}
-#   menu.choices(:python, :perl) do |chosen|
-#     say("Yo you picked #{chosen}")
-#     pup = chosen
-#   end
-# end
-# pete = ask("Company?  ") { |q| q.default = "none" }
-
-# puts pete
-
-
-
-
-
-
-
-
-
-
-
-# Examples
-
-# Basic usage:
-# ask("Company?  ") { |q| q.default = "none" }
-
-# Validation:
-# ask("Age?  ", Integer) { |q| q.in = 0..105 }
-# ask("Name?  (last, first)  ") { |q| q.validate = /\A\w+, ?\w+\Z/ }
-
-# Type conversion for answers:
-# ask("Birthday?  ", Date)
-# ask("Interests?  (comma sep list)  ", lambda { |str| str.split(/,\s*/) })
-
-# Reading passwords:
-# ask("Enter your password:  ") { |q| q.echo = false }
-# ask("Enter your password:  ") { |q| q.echo = "x" }
-
-# ERb based output (with HighLine's ANSI color tools):
-# say("This should be <%= color('bold', BOLD) %>!")
-
-# Menus:
-# choose do |menu|
-#   menu.prompt = "Please choose your favorite programming language?  "
-#   menu.choice(:ruby) { say("Good choice!") }
-#   menu.choices(:python, :perl) { say("Not from around here, are you?") }
-# end
-
 
 
 
