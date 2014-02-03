@@ -8,10 +8,10 @@ class TestIntegration < LocationTest
 
   @@sample_inputs = ['1','Wilmington','DE','2','5']
 
-  def test
+  # def test
 
 
-  end
+  # end
 
 
 end

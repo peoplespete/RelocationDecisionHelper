@@ -108,5 +108,4 @@ class Location
       ask("The entry is currently: #{old}.  Type a new value or press ENTER to leave unchanged.".colorize(:color => $color_dark, :background => $color_light)) { |q| q.default = old }
     end
   end
-
 end

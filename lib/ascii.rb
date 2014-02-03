@@ -45,6 +45,4 @@ class Ascii
             '-'  '-'                      '-'  '-'               '-'".bold.colorize(:color => @@color_dark, :background => @@color_light)
   end
 
-
-
 end
