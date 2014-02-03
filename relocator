@@ -41,8 +41,8 @@ loop do
     menu.choice("Edit") do |chosen|
       old_update_city = Location.fetch_query('update')
       new_update_city = Location.fetch_replacement(old_update_city)
-      puts old_update_city.inspect
-      puts new_update_city.inspect
+      puts "Old Location: #{old_update_city.inspect}"
+      puts "Updated Location: #{new_update_city.inspect}"
       Location.update(old_update_city, new_update_city)
     end
     menu.choice("Remove") do |chosen|
