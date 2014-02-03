@@ -6,16 +6,16 @@ class TestUpdatingLocations < LocationTest
 # to run a single line test
 #$ ruby test/test_entering_purchases --name test_valid_purchase_gets_saved
 
-  @@sample_inputs_write = ['1','Eston','pa','1','5']
-  @@sample_inputs_update = ['3','1','Easton','MA','Temperate','5']
+  @@sample_inputs_write = ['1','Eston','pa','1','no jobs','77','my wife loves it','5']
+  @@sample_inputs_update = ['3','1','Easton','MA','Temperate','jobs yes!','53','ewww like totally!','5']
 
   def test_update_allows_user_to_change_existing_information
     pipe_it @@sample_inputs_write
     database.results_as_hash = false
-    Location.update(['Eston', 'PA', 'Cool'],['Easton','MA', 'Temperate'])
+    Location.update(['Eston', 'PA', 'Cool','no jobs','77','my wife loves it'],['Easton','MA', 'Temperate','jobs yes!','53','ewww like totally!'])
     result = database.execute("select * from locations")
     result = clean_db_output(result)
-    assert_equal result, ['Easton','MA', 'Temperate']
+    assert_equal result, ['Easton','MA', 'Temperate','jobs yes!',53,'ewww like totally!']
   end
 
   def test_update_works_with_highline_prompts
@@ -24,8 +24,7 @@ class TestUpdatingLocations < LocationTest
     pipe_it @@sample_inputs_update
     result = database.execute("select * from locations")
     result = result.flatten.drop(1)
-    # result = clean_db_output(result)
-    assert_equal result, ['Easton','MA', 'Temperate']
+    assert_equal result, ['Easton','MA', 'Temperate','jobs yes!',53,'ewww like totally!']
   end
 
   def test_update_displays_message_confirming_update

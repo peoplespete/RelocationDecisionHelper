@@ -3,8 +3,8 @@ require_relative 'helper'
 
 class TestDeletingLocations < LocationTest
 
-  @@sample_inputs_write_ = ['1','Wilmington','DE','2','5']
-  @@sample_inputs_write_2 = ['1','Easton','pa','1','5']
+  @@sample_inputs_write_ = ['1','Wilmington','DE','2','no jobs','77','my wife loves it','5']
+  @@sample_inputs_write_2 = ['1','Easton','pa','1','no jobs','77','my wife loves it','5']
   @@sample_inputs_delete = ['4','1','5']
   @@sample_inputs_delete_2 = ['4','3','5']
 
@@ -27,7 +27,7 @@ class TestDeletingLocations < LocationTest
     Location.remove(['Easton', 'PA'])
     result = database.execute("select * from locations")
     result = clean_db_output(result)
-    assert_equal result, ['Wilmington', 'DE', 'Temperate']
+    assert_equal result, ['Wilmington', 'DE', 'Temperate','no jobs',77,'my wife loves it']
   end
 
   def test_removing_displays_message_confirming_removal

@@ -6,7 +6,7 @@ class TestEnteringLocations < LocationTest
 # to run a single line test
 #$ ruby test/test_entering_purchases --name test_valid_purchase_gets_saved
 
-  @@sample_inputs = ['1','Wilmington','DE','2','5']
+  @@sample_inputs = ['1','Wilmington','DE','2','no jobs','77','my wife loves it','5']
 
   def test_asks_for_name_of_location
     actual = pipe_it @@sample_inputs
@@ -21,7 +21,8 @@ class TestEnteringLocations < LocationTest
   end
 
   def test_does_not_allow_non_states_to_be_added
-    actual = pipe_it ['1','Wilmington','TE','TN','1','5']
+    actual = pipe_it @@sample_inputs.insert(2, 'TE')
+    @@sample_inputs.delete('TE')
     expected = "Your answer isn't within the expected range"
     assert_includes_in_order actual, expected, "NC", "TX"
   end
@@ -32,11 +33,29 @@ class TestEnteringLocations < LocationTest
     assert_includes_in_order actual, expected
   end
 
+  def test_employment_outlook
+    actual = pipe_it @@sample_inputs
+    expected = "What employment possibilities exist in Wilmington?"
+    assert_includes_in_order actual, expected
+  end
+
+  def test_cost_of_living
+    actual = pipe_it @@sample_inputs
+    expected = "How would you rate the cost of living of Wilmington"
+    assert_includes_in_order actual, expected
+  end
+
+  def test_notes
+    actual = pipe_it @@sample_inputs
+    expected = "Any other information you'd like to add about Wilmington?"
+    assert_includes_in_order actual, expected
+  end
+
   def test_valid_location_gets_saved
     actual = pipe_it @@sample_inputs
     database.results_as_hash = false
     results = database.execute("select * from locations")
-    expected = ['Wilmington', 'DE', 'Temperate']
+    expected = ['Wilmington', 'DE', 'Temperate','no jobs',77,'my wife loves it']
     results[0].shift
     assert_equal expected, results[0]
 
