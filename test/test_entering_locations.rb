@@ -6,7 +6,7 @@ class TestEnteringLocations < LocationTest
 # to run a single line test
 #$ ruby test/test_entering_purchases --name test_valid_purchase_gets_saved
 
-  @@sample_inputs = ['1','Wilmington','DE','2']
+  @@sample_inputs = ['1','Wilmington','DE','2','5']
 
   def test_asks_for_name_of_location
     actual = pipe_it @@sample_inputs

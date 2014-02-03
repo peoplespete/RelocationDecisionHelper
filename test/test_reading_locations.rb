@@ -6,9 +6,9 @@ class TestReadingLocations < LocationTest
 # to run a single line test
 #$ ruby test/test_entering_purchases --name test_valid_purchase_gets_saved
 
-  @@sample_inputs_write_ = ['1','Wilmington','DE','2']
-  @@sample_inputs_write_2 = ['1','Easton','pa','1']
-  @@sample_inputs_read_ = ['2','2']
+  @@sample_inputs_write_ = ['1','Wilmington','DE','2','5']
+  @@sample_inputs_write_2 = ['1','Easton','pa','1','5']
+  @@sample_inputs_read_ = ['2','2','5']
 
   def test_that_you_can_retrieve_all_locations
     actual1 = pipe_it @@sample_inputs_write_

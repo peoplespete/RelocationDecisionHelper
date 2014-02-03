@@ -3,8 +3,8 @@ require_relative 'helper'
 
 class TestDeletingLocations < LocationTest
 
-  @@sample_inputs_write_ = ['1','Wilmington','DE','2']
-  @@sample_inputs_write_2 = ['1','Easton','pa','1']
+  @@sample_inputs_write_ = ['1','Wilmington','DE','2','5']
+  @@sample_inputs_write_2 = ['1','Easton','pa','1','5']
 
 # to run a single line test
 #$ ruby test/test_entering_purchases --name test_valid_purchase_gets_saved

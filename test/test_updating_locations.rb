@@ -6,8 +6,8 @@ class TestUpdatingLocations < LocationTest
 # to run a single line test
 #$ ruby test/test_entering_purchases --name test_valid_purchase_gets_saved
 
-  @@sample_inputs_write = ['1','Eston','pa','1']
-  @@sample_inputs_update = ['3','1','Easton','MA','Temperate']
+  @@sample_inputs_write = ['1','Eston','pa','1','5']
+  @@sample_inputs_update = ['3','1','Easton','MA','Temperate','5']
 
   def test_update_allows_user_to_change_existing_information
     pipe_it @@sample_inputs_write
