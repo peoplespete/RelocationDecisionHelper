@@ -20,6 +20,12 @@ class TestEnteringLocations < LocationTest
     assert_includes_in_order actual, expected
   end
 
+  def test_does_not_allow_non_states_to_be_added
+    actual = pipe_it ['1','Wilmington','TE','TN','1','5']
+    expected = "Your answer isn't within the expected range"
+    assert_includes_in_order actual, expected, "NC", "TX"
+  end
+
   def test_asks_for_climate_of_location
     actual = pipe_it @@sample_inputs
     expected = "What climate does Wilmington have?"
