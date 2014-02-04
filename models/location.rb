@@ -170,7 +170,7 @@ class Location
       menu.choice("No") do |chosen|
       end
     end
-
+    puts '[ID, CITY, STATE, CLIMATE, EMPLOYMENT OUTLOOK, COST OF LIVING INDEX, NOTES]'.bold.colorize(:color => $color_light, :background => $color_dark)
     search(location_options)
   end
 

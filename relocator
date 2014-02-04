@@ -23,12 +23,13 @@ loop do
       choose do |menu|
         menu.prompt = "Would you like to filter your results?".bold.colorize(:color => color_dark, :background => color_light)
         menu.choice("Yes") do |chosen|
-          puts Location.build_search.inspect
+          puts Location.build_search.inspect.bold.colorize(:color => color_light, :background => color_dark)
         end
         menu.choice("No") do |chosen|
           search_city = Location.fetch_query('view')
+          puts '[ID, CITY, STATE, CLIMATE, EMPLOYMENT OUTLOOK, COST OF LIVING INDEX, NOTES]'.bold.colorize(:color => color_light, :background => color_dark)
           Location.find(search_city).each do |record|
-            print record.to_s.colorize(:color => color_light, :background => color_dark)
+            print record.to_s.bold.colorize(:color => color_light, :background => color_dark)
             puts ""
           end
           puts ""
