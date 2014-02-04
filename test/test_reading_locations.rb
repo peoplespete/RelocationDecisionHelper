@@ -8,7 +8,7 @@ class TestReadingLocations < LocationTest
 
   @@sample_inputs_write_ = ['1','Wilmington','DE','2','no jobs','77','my wife loves it','5']
   @@sample_inputs_write_2 = ['1','Easton','pa','1','no jobs','77','my wife loves it','5']
-  @@sample_inputs_read_ = ['2','2','5']
+  @@sample_inputs_read_ = ['2','2','2','5']
 
   def test_that_you_can_retrieve_all_locations
     actual1 = pipe_it @@sample_inputs_write_

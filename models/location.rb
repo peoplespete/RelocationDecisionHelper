@@ -108,4 +108,104 @@ class Location
       ask("The entry is currently: #{old}.  Type a new value or press ENTER to leave unchanged.".colorize(:color => $color_dark, :background => $color_light)) { |q| q.default = old }
     end
   end
+
+  def self.build_search
+    location_options = {}
+    puts "Welcome to the search tool!"
+
+    choose do |menu|
+      menu.prompt = "Would you like to filter by state?".bold.colorize(:color => $color_dark, :background => $color_light)
+      menu.choice("Yes") do |chosen|
+        states = ["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY","AS","DC","FM","GU","MH","MP","PW","PR","VI","AE","AA","AP"]
+        location_options[:state_code] = ask("What state would you like to filter by?".bold.colorize(:color => $color_dark, :background => $color_light)) { |q| q.in = (states << states.map{|state| state.downcase}).flatten }
+      end
+      menu.choice("No") do |chosen|
+      end
+    end
+
+    choose do |menu|
+      menu.prompt = "Would you like to filter by climate?".bold.colorize(:color => $color_dark, :background => $color_light)
+      menu.choice("Yes") do |chosen|
+        choose do |menu|
+          menu.prompt = "What climate would you like to filter by?".bold.colorize(:color => $color_dark, :background => $color_light)
+          menu.choice("Cool") do |chosen|
+            location_options[:climate] = 'Cool'
+          end
+          menu.choice("Temperate") do |chosen|
+            location_options[:climate] = 'Temperate'
+          end
+          menu.choice("Warm") do |chosen|
+            location_options[:climate] = 'Warm'
+          end
+        end
+      end
+      menu.choice("No") do |chosen|
+      end
+    end
+
+
+    choose do |menu|
+      menu.prompt = "Would you like to filter by employment outlook?".bold.colorize(:color => $color_dark, :background => $color_light)
+      menu.choice("Yes") do |chosen|
+        location_options[:employment_outlook] = ask("What employment keyword would you like to filter by?".bold.colorize(:color => $color_dark, :background => $color_light)) {}
+      end
+      menu.choice("No") do |chosen|
+      end
+    end
+
+    choose do |menu|
+      menu.prompt = "Would you like to filter by cost of living?".bold.colorize(:color => $color_dark, :background => $color_light)
+      menu.choice("Yes") do |chosen|
+        location_options[:greater_than] = ask("What is the minimum cost of living?".bold.colorize(:color => $color_dark, :background => $color_light), Integer) { |q| q.in = -1..100 }
+        location_options[:less_than] = ask("What is the maximum cost of living?".bold.colorize(:color => $color_dark, :background => $color_light), Integer) { |q| q.in = -1..100 }
+      end
+      menu.choice("No") do |chosen|
+      end
+    end
+
+    choose do |menu|
+      menu.prompt = "Would you like to filter by notes?".bold.colorize(:color => $color_dark, :background => $color_light)
+      menu.choice("Yes") do |chosen|
+        location_options[:notes] = ask("What notes keyword would you like to filter by?".bold.colorize(:color => $color_dark, :background => $color_light)) {}
+      end
+      menu.choice("No") do |chosen|
+      end
+    end
+
+    search(location_options)
+  end
+
+  def self.search(parameters)
+    where_string = "where "
+    like = ""
+    operator = "="
+
+    parameters.each do |key,value|
+    operator = case key
+      when :state_code
+        value.upcase!
+        like = ""
+        "="
+      when :climate, :employment_outlook, :notes
+        like = "%"
+        "LIKE"
+      when :greater_than
+        key = :cost_of_living
+        like = ""
+        ">"
+      when :less_than
+        key = :cost_of_living
+        like = ""
+        "<"
+      end
+      where_string << key.to_s << " #{operator} '#{like}#{value}#{like}' and " #MAKE VALUE STRING
+    end
+    where_string = where_string[0..-5] #removes the extra 'and' off the end
+    database = Environment.database_connection
+    database.results_as_hash = false
+    results = database.execute("select * from locations #{where_string} order by id asc")
+    results
+  end
+
+
 end

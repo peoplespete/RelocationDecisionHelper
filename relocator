@@ -20,12 +20,20 @@ loop do
       Location.add
     end
     menu.choice("View") do |chosen|
-      search_city = Location.fetch_query('view')
-      Location.find(search_city).each do |record|
-        print record.to_s.colorize(:color => color_light, :background => color_dark)
-        puts ""
+      choose do |menu|
+        menu.prompt = "Would you like to filter your results?"
+        menu.choice("Yes") do |chosen|
+          puts Location.build_search.inspect
+        end
+        menu.choice("No") do |chosen|
+          search_city = Location.fetch_query('view')
+          Location.find(search_city).each do |record|
+            print record.to_s.colorize(:color => color_light, :background => color_dark)
+            puts ""
+          end
+          puts ""
+        end
       end
-      puts ""
     end
     menu.choice("Edit") do |chosen|
       old_update_city = Location.fetch_query('update')
