@@ -111,8 +111,7 @@ class Location
 
   def self.build_search
     location_options = {}
-    puts "Welcome to the search tool!"
-
+    puts "Welcome to the search tool!".bold.colorize(:color => $color_dark, :background => $color_light)
     choose do |menu|
       menu.prompt = "Would you like to filter by state?".bold.colorize(:color => $color_dark, :background => $color_light)
       menu.choice("Yes") do |chosen|

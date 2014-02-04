@@ -21,7 +21,7 @@ loop do
     end
     menu.choice("View") do |chosen|
       choose do |menu|
-        menu.prompt = "Would you like to filter your results?"
+        menu.prompt = "Would you like to filter your results?".bold.colorize(:color => color_dark, :background => color_light)
         menu.choice("Yes") do |chosen|
           puts Location.build_search.inspect
         end
