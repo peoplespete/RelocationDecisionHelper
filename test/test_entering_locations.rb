@@ -53,16 +53,12 @@ class TestEnteringLocations < LocationTest
 
   def test_valid_location_gets_saved
     actual = pipe_it @@sample_inputs
-    # database.results_as_hash = false
-    results = Location.all.to_a
-    puts results
-    # database.execute("select * from locations")
+    location = Location.first
+    results = [location.city, location.state_code, location.climate, location.employment_outlook, location.cost_of_living, location.notes]
     expected = ['Wilmington', 'DE', 'Temperate','no jobs',77,'my wife loves it']
-    # results[0].shift
-    assert_equal expected, results
+    assert_equal results, expected
 
     result = Location.count
-    # database.execute("select count(id) from locations")
     assert_equal 1, result[0][0]
   end
 
