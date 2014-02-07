@@ -3,6 +3,8 @@ source "https://rubygems.org"
 ruby "2.0.0"
 #ruby-gemset=RelocationDecisionHelper
 
+gem 'rake'
+gem "activerecord"
 gem 'sqlite3'
 gem "highline", "~> 1.6.20"
 gem "colorize", "~> 0.6.0"

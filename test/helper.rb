@@ -4,14 +4,12 @@ require_relative '../lib/environment'
 class LocationTest < MiniTest::Unit::TestCase
   def setup
     Environment.environment = "test"
+    Environment.connect_to_database
   end
 
   def teardown
-    database.execute("delete from locations")
-  end
-
-  def database
-    Environment.database_connection
+    Location.destroy_all
+    # database.execute("delete from locations")
   end
 
   def pipe_it(args)
