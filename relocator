@@ -80,8 +80,6 @@ loop do
       puts "Old Location: #{old_update_city.inspect}".colorize(:color => $color_light, :background => $color_dark)
       puts "Updated Location: #{new_update_city.inspect}".colorize(:color => $color_dark, :background => $color_light)
       # item_to_update = find([old_data[0],old_data[1]]).flatten
-      location = Location.find(old_update_city[:id])
-      location.update(city: '#{new_update_city[0].capitalize}', state_code: '#{new_update_city[1].upcase}', climate: '#{new_update_city[2].capitalize}', employment_outlook: '#{new_update_city[3]}', cost_of_living: '#{new_update_city[4].to_i}', notes: '#{new_update_city[5]}')
       # database.execute("update locations set city = '#{new_update_city[0].capitalize}', state_code = '#{new_update_city[1].upcase}', climate = '#{new_update_city[2].capitalize}', employment_outlook = '#{new_update_city[3]}', cost_of_living = '#{new_update_city[4].to_i}', notes = '#{new_update_city[5]}' where id = '#{item_to_update[0]}'")
       puts 'Location Updated'.bold.colorize(:color => $color_light, :background => $color_dark)
       # Location.update(old_update_city, new_update_city)

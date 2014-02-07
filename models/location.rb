@@ -33,13 +33,13 @@ class Location < ActiveRecord::Base
   end
 
   def self.fetch_query(action = nil)
-    results = Location.all
+    locations = Location.all
     # database.execute("select city, state_code, climate, employment_outlook, cost_of_living, notes from locations order by id asc")
     choose do |menu|
       menu.prompt = "What city would you like to #{action}?".bold.colorize(:color => $color_dark, :background => $color_light)
-      results.each do |city_state|
-        menu.choice("#{city_state[0]}, #{city_state[1]}") do |chosen|
-          city_state
+      locations.each do |location|
+        menu.choice("#{location.city}, #{location.state_code}") do |chosen|
+          location
         end
       end
       unless action == 'update'
@@ -64,9 +64,14 @@ class Location < ActiveRecord::Base
 
 
   def self.fetch_replacement(old_data)
-    old_data.map do |old|
-      ask("The entry is currently: #{old}.  Type a new value or press ENTER to leave unchanged.".colorize(:color => $color_dark, :background => $color_light)) { |q| q.default = old }
+    location_attrs = [old_data.city, old_data.state_code, old_data.climate, old_data.employment_outlook, old_data.cost_of_living, old_data.notes]
+    options = []
+    location_attrs.each do |attr|
+      options << ask("The entry is currently: #{attr}.  Type a new value or press ENTER to leave unchanged.".colorize(:color => $color_dark, :background => $color_light)) { |q| q.default = attr }
     end
+    location = Location.find(old_data.id)
+    location.update(city: options[0].capitalize, state_code: options[1].upcase, climate: options[2].capitalize, employment_outlook: options[3], cost_of_living: options[4].to_i, notes: options[5])
+    # location.update(city: 'Easton'.capitalize, state_code: 'MA'.upcase, climate: 'Temperate'.capitalize, employment_outlook: 'jobs yes!', cost_of_living: 53, notes: 'ewww like totally!')
   end
 
   def self.build_search
