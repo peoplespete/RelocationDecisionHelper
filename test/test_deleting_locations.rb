@@ -14,26 +14,25 @@ class TestDeletingLocations < LocationTest
   def test_removing_all_locations
     actual1 = pipe_it @@sample_inputs_write_
     actual2 = pipe_it @@sample_inputs_write_2
-    database.results_as_hash = false
     Location.remove(nil)
-    result = database.execute("select count(id) from locations")
-    assert_equal 0, result[0][0]
+    # result = database.execute("select count(id) from locations")
+    assert_equal 0, Location.count
   end
 
   def test_removing_chosen_location
     actual1 = pipe_it @@sample_inputs_write_
     actual2 = pipe_it @@sample_inputs_write_2
-    database.results_as_hash = false
     Location.remove(['Easton', 'PA'])
-    result = database.execute("select * from locations")
-    result = clean_db_output(result)
+    location = Location.first
+    result = [location.city, location.state_code, location.climate, location.employment_outlook, location.cost_of_living, location.notes]
+    # result = database.execute("select * from locations")
+    # result = clean_db_output(result)
     assert_equal result, ['Wilmington', 'DE', 'Temperate','no jobs',77,'my wife loves it']
   end
 
   def test_removing_displays_message_confirming_removal
     pipe_it @@sample_inputs_write_
     pipe_it @@sample_inputs_write_2
-    database.results_as_hash = false
     result = pipe_it @@sample_inputs_delete
     assert_includes_in_order result, 'Location Removed'
   end
@@ -41,13 +40,9 @@ class TestDeletingLocations < LocationTest
   def test_removing_displays_message_confirming_removal_of_all
     pipe_it @@sample_inputs_write_
     pipe_it @@sample_inputs_write_2
-    database.results_as_hash = false
     result = pipe_it @@sample_inputs_delete_2
     assert_includes_in_order result, 'Locations Removed'
   end
-
-
-
 end
 
 

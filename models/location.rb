@@ -51,12 +51,11 @@ class Location < ActiveRecord::Base
     end
   end
 
-  def self.remove(delete_city)
+  def self.remove(delete_city = nil)
     cities_or_city = locate(delete_city)
-    # print cities_or_city.inspect
     plural = ''
     cities_or_city.each_with_index do |entry, i|
-      Location.destroy(entry[0])
+      Location.destroy(entry.id)
         # "delete from locations where id = '#{entry[0]}'")
       plural = 's' if i > 0
     end

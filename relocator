@@ -49,9 +49,9 @@ environment = ARGV[0]
 # puts environment
 Environment.environment = environment || "production"
 Environment.connect_to_database
-Ascii.welcome
+#Ascii.welcome
 loop do
-  Ascii.menu
+  #Ascii.menu
   choose do |menu|
     menu.prompt = "What would you like to do?".bold.colorize(:color => $color_dark, :background => $color_light)
     menu.choice("Add") do |chosen|
@@ -91,7 +91,7 @@ loop do
       Location.remove(delete_city)
     end
     menu.choice("EXIT") do |chosen|
-      Ascii.goodbye
+      #Ascii.goodbye
       exit
     end
   end
