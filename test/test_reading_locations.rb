@@ -13,25 +13,25 @@ class TestReadingLocations < LocationTest
   def test_that_you_can_retrieve_all_locations
     actual1 = pipe_it @@sample_inputs_write_
     actual2 = pipe_it @@sample_inputs_write_2
-    database.results_as_hash = false
-    result = Location.find(nil)
-    result = result.map do |entry|
-      entry.drop(1)
+    locations = Location.locate(nil)
+    result = []
+    locations.each do |location|
+      result << [location.city, location.state_code, location.climate, location.employment_outlook, location.cost_of_living, location.notes]
     end
-    expected = [['Wilmington', 'DE', 'Temperate','no jobs',77,'my wife loves it'],['Easton','PA','Cool','no jobs',77,'my wife loves it']]
+    expected = [['Easton','PA','Cool','no jobs',77,'my wife loves it'],['Wilmington', 'DE', 'Temperate','no jobs',77,'my wife loves it']]
     assert_equal expected, result
   end
 
   def test_that_you_can_retrieve_a_location_by_city
     actual1 = pipe_it @@sample_inputs_write_
     actual2 = pipe_it @@sample_inputs_write_2
-    database.results_as_hash = false
-    result = Location.find(["Wilmington","DE"])
-    result = result.map do |entry|
-      entry.drop(1)
-    end
+    location = Location.locate(["Wilmington","DE"])
+    location = location[0]
+    result = []
+    result << [location.city, location.state_code, location.climate, location.employment_outlook, location.cost_of_living, location.notes]
+    result.flatten!
     expected = ['Wilmington', 'DE', 'Temperate','no jobs',77,'my wife loves it']
-    assert_equal expected, result[0]
+    assert_equal expected, result
   end
 
   def test_that_user_is_asked_for_city_search_term
