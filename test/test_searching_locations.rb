@@ -20,11 +20,11 @@ class TestSearchingLocations < LocationTest
     pipe_it @@sample_inputs_write_3
     pipe_it @@sample_inputs_write_4
     pipe_it @@sample_inputs_write_5
-    database.results_as_hash = false
     options = {:state_code => 'DE'}
-    result = Location.search(options)
-    result = result.map do |entry|
-      entry.drop(1)
+    locations = Location.search(options)
+    result = []
+    locations.each do |location|
+      result << [location.city, location.state_code, location.climate, location.employment_outlook, location.cost_of_living, location.notes]
     end
     expected = [['Wilmington','DE','Temperate','computer and IT professionals',77,'my wife loves it'],['Easton','DE','Cool','factory and farming major industries',32,'my uncle lives there']]
     assert_equal expected, result
@@ -36,11 +36,11 @@ class TestSearchingLocations < LocationTest
     pipe_it @@sample_inputs_write_3
     pipe_it @@sample_inputs_write_4
     pipe_it @@sample_inputs_write_5
-    database.results_as_hash = false
     options = {:climate => 'Cool'}
-    result = Location.search(options)
-    result = result.map do |entry|
-      entry.drop(1)
+    locations = Location.search(options)
+    result = []
+    locations.each do |location|
+      result << [location.city, location.state_code, location.climate, location.employment_outlook, location.cost_of_living, location.notes]
     end
     expected = [['Easton','DE','Cool','factory and farming major industries',32,'my uncle lives there'],['Plymouth','MA','Cool','ship building, masonry',93,'near the ocean'],['Helena','MT','Cool','forestry and mining',25,'lots of fresh air']]
     assert_equal expected, result
@@ -52,11 +52,11 @@ class TestSearchingLocations < LocationTest
     pipe_it @@sample_inputs_write_3
     pipe_it @@sample_inputs_write_4
     pipe_it @@sample_inputs_write_5
-    database.results_as_hash = false
     options = {:employment_outlook => 'ship'}
-    result = Location.search(options)
-    result = result.map do |entry|
-      entry.drop(1)
+    locations = Location.search(options)
+    result = []
+    locations.each do |location|
+      result << [location.city, location.state_code, location.climate, location.employment_outlook, location.cost_of_living, location.notes]
     end
     expected = [['Plymouth','MA','Cool','ship building, masonry',93,'near the ocean'],['Ocean city','NJ','Temperate','shipping and fishing',12,'many of my friends live there']]
     assert_equal expected, result
@@ -68,11 +68,11 @@ class TestSearchingLocations < LocationTest
     pipe_it @@sample_inputs_write_3
     pipe_it @@sample_inputs_write_4
     pipe_it @@sample_inputs_write_5
-    database.results_as_hash = false
     options = {:greater_than => 90}
-    result = Location.search(options)
-    result = result.map do |entry|
-      entry.drop(1)
+    locations = Location.search(options)
+    result = []
+    locations.each do |location|
+      result << [location.city, location.state_code, location.climate, location.employment_outlook, location.cost_of_living, location.notes]
     end
     expected = [['Plymouth','MA','Cool','ship building, masonry',93,'near the ocean']]
     assert_equal expected, result
@@ -84,11 +84,11 @@ class TestSearchingLocations < LocationTest
     pipe_it @@sample_inputs_write_3
     pipe_it @@sample_inputs_write_4
     pipe_it @@sample_inputs_write_5
-    database.results_as_hash = false
     options = {:greater_than => 20, :less_than => 30}
-    result = Location.search(options)
-    result = result.map do |entry|
-      entry.drop(1)
+    locations = Location.search(options)
+    result = []
+    locations.each do |location|
+      result << [location.city, location.state_code, location.climate, location.employment_outlook, location.cost_of_living, location.notes]
     end
     expected = [['Helena','MT','Cool','forestry and mining',25,'lots of fresh air']]
     assert_equal expected, result
@@ -100,11 +100,11 @@ class TestSearchingLocations < LocationTest
     pipe_it @@sample_inputs_write_3
     pipe_it @@sample_inputs_write_4
     pipe_it @@sample_inputs_write_5
-    database.results_as_hash = false
     options = {:notes => 'UNCLE'}
-    result = Location.search(options)
-    result = result.map do |entry|
-      entry.drop(1)
+    locations = Location.search(options)
+    result = []
+    locations.each do |location|
+      result << [location.city, location.state_code, location.climate, location.employment_outlook, location.cost_of_living, location.notes]
     end
     expected = [['Easton','DE','Cool','factory and farming major industries',32,'my uncle lives there']]
     assert_equal expected, result
@@ -116,11 +116,11 @@ class TestSearchingLocations < LocationTest
     pipe_it @@sample_inputs_write_3
     pipe_it @@sample_inputs_write_4
     pipe_it @@sample_inputs_write_5
-    database.results_as_hash = false
     options = {:state_code => 'DE', :climate => 'Temperate', :employment_outlook => 'IT', :greater_than => 75, :less_than => 80, :notes => 'wife'}
-    result = Location.search(options)
-    result = result.map do |entry|
-      entry.drop(1)
+    locations = Location.search(options)
+    result = []
+    locations.each do |location|
+      result << [location.city, location.state_code, location.climate, location.employment_outlook, location.cost_of_living, location.notes]
     end
     expected = [['Wilmington','DE','Temperate','computer and IT professionals',77,'my wife loves it']]
     assert_equal expected, result

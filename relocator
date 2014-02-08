@@ -61,7 +61,10 @@ loop do
       choose do |menu|
         menu.prompt = "Would you like to filter your results?".bold.colorize(:color => $color_dark, :background => $color_light)
         menu.choice("Yes") do |chosen|
-          puts Location.build_search.inspect.bold.colorize(:color => $color_light, :background => $color_dark)
+          locations = Location.build_search
+          locations.each do |location|
+            puts [location.city, location.state_code, location.climate, location.employment_outlook, location.cost_of_living, location.notes].inspect.bold.colorize(:color => $color_light, :background => $color_dark)
+          end
         end
         menu.choice("No") do |chosen|
           search_city = Location.fetch_query('view')
