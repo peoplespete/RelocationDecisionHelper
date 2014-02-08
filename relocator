@@ -35,7 +35,6 @@ def add_location
   location_options[:notes] = ask("Any other information you'd like to add about #{location_options[:city]}?".bold.colorize(:color => $color_dark, :background => $color_light)) { |q| q.default = "none" }
 
   if Location.where(city: location_options[:city].capitalize, state_code: location_options[:state_code].upcase) != []
-    # locate([location_options[:city].capitalize, location_options[:state_code].upcase]) != []
     puts "Sorry, that location already exists.".colorize(:color => $color_dark, :background => $color_light)
   else
     Location.create(location_options)
@@ -46,12 +45,11 @@ end
 
 
 environment = ARGV[0]
-# puts environment
 Environment.environment = environment || "production"
 Environment.connect_to_database
-#Ascii.welcome
+Ascii.welcome
 loop do
-  #Ascii.menu
+  Ascii.menu
   choose do |menu|
     menu.prompt = "What would you like to do?".bold.colorize(:color => $color_dark, :background => $color_light)
     menu.choice("Add") do |chosen|
@@ -83,7 +81,6 @@ loop do
       puts "Old Location: #{old_update_city.inspect}".colorize(:color => $color_light, :background => $color_dark)
       puts "Updated Location: #{new_update_city.inspect}".colorize(:color => $color_dark, :background => $color_light)
       puts 'Location Updated'.bold.colorize(:color => $color_light, :background => $color_dark)
-      # Location.update(old_update_city, new_update_city)
     end
     menu.choice("Remove") do |chosen|
       delete_city = Location.fetch_query('remove')
@@ -91,7 +88,7 @@ loop do
       Location.remove(delete_city)
     end
     menu.choice("EXIT") do |chosen|
-      #Ascii.goodbye
+      Ascii.goodbye
       exit
     end
   end
