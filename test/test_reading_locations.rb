@@ -25,7 +25,8 @@ class TestReadingLocations < LocationTest
   def test_that_you_can_retrieve_a_location_by_city
     actual1 = pipe_it @@sample_inputs_write_
     actual2 = pipe_it @@sample_inputs_write_2
-    location = Location.locate(["Wilmington","DE"])
+    local = Location.last
+    location = Location.locate(local)
     location = location[0]
     result = []
     result << [location.city, location.state_code, location.climate, location.employment_outlook, location.cost_of_living, location.notes]

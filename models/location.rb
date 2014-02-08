@@ -24,7 +24,7 @@ class Location < ActiveRecord::Base
     # city = search_city ? search_city[0] : nil
     # state_code = search_city ? search_city[1] : nil
     if search_city
-      results = Location.where(city: search_city[0], state_code: search_city[1]).limit(1)
+      results = Location.where(city: search_city.city, state_code: search_city.state_code)
     else
       results = Location.all
       # database.execute("select * from locations order by id asc")
@@ -64,13 +64,14 @@ class Location < ActiveRecord::Base
 
 
   def self.fetch_replacement(old_data)
-    location_attrs = [old_data.city, old_data.state_code, old_data.climate, old_data.employment_outlook, old_data.cost_of_living, old_data.notes]
+    location_attrs = [old_data.city, old_data.state_code, old_data.climate, old_data.employment_outlook, old_data.cost_of_living.to_s, old_data.notes]
     options = []
-    location_attrs.each do |attr|
-      options << ask("The entry is currently: #{attr}.  Type a new value or press ENTER to leave unchanged.".colorize(:color => $color_dark, :background => $color_light)) { |q| q.default = attr }
+    location_attrs.each do |attrib|
+      options << ask("The entry is currently: #{attrib}.  Type a new value or press ENTER to leave unchanged.".colorize(:color => $color_dark, :background => $color_light)) { |q| q.default = attrib }
     end
     location = Location.find(old_data.id)
     location.update(city: options[0].capitalize, state_code: options[1].upcase, climate: options[2].capitalize, employment_outlook: options[3], cost_of_living: options[4].to_i, notes: options[5])
+    location
     # location.update(city: 'Easton'.capitalize, state_code: 'MA'.upcase, climate: 'Temperate'.capitalize, employment_outlook: 'jobs yes!', cost_of_living: 53, notes: 'ewww like totally!')
   end
 

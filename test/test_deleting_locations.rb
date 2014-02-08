@@ -22,7 +22,8 @@ class TestDeletingLocations < LocationTest
   def test_removing_chosen_location
     actual1 = pipe_it @@sample_inputs_write_
     actual2 = pipe_it @@sample_inputs_write_2
-    Location.remove(['Easton', 'PA'])
+    location = Location.first
+    Location.remove(location)
     location = Location.first
     result = [location.city, location.state_code, location.climate, location.employment_outlook, location.cost_of_living, location.notes]
     # result = database.execute("select * from locations")
